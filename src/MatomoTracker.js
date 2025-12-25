@@ -162,7 +162,7 @@ class MatomoTracker {
    *
    * @see {@link https://developer.matomo.org/api-reference/tracking-api#optional-event-trackinghttpsmatomoorgdocsevent-tracking-info|Matomo Tracking API - Event Tracking}
    */
-  trackEvent({ category, action, name, value, campaign, url, userInfo = {} }) {
+  trackEvent({ category, action, name, value, campaign = null, url, userInfo = {} }) {
     if (!category) {
       throw new Error('Error: The "category" parameter is required for tracking an event.');
     }
@@ -176,7 +176,7 @@ class MatomoTracker {
       e_a: action,
       e_n: name,
       e_v: value,
-      mtm_campaign: campaign,
+      ...(campaign && { mtm_campaign: campaign }),
       url,
     });
   }
